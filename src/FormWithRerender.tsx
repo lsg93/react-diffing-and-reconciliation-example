@@ -68,6 +68,42 @@ export function FormWithRerenderWithBugFixedByControlledComponents() {
 	);
 }
 
+export function FormWithRerenderWithBugFixedByArray() {
+	const [isCompany, setIsCompany] = useState<boolean>(false);
+
+	const toggleIsCompany = () => {
+		setIsCompany((prev) => !prev);
+	};
+
+	return (
+		<>
+			{/**  Rest of form */}
+			<div className="form-row">
+				<Checkbox
+					label="Signing up as company?"
+					handleChange={toggleIsCompany}
+				/>
+			</div>
+			<div className="form-row">
+				{isCompany ? (
+					<Input
+						label="Company Tax ID Number"
+						id="company-tax-id-number"
+						placeholder="Enter your company ID."
+					/>
+				) : null}
+				{!isCompany ? (
+					<Input
+						label="Personal Tax ID Number"
+						id="personal-tax-id-number"
+						placeholder="Enter your company ID."
+					/>
+				) : null}
+			</div>
+		</>
+	);
+}
+
 function FormWithRerenderWithBug() {
 	const [isCompany, setIsCompany] = useState<boolean>(false);
 
