@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Input from "./components/Input";
 import Checkbox from "./components/Checkbox";
+import { NoCompanyTax } from "./components/NoCompanyTax";
 
 function Form() {
 	const [isCompany, setIsCompany] = useState(false);
@@ -25,7 +26,9 @@ function Form() {
 						id="company-tax-id-number"
 						placeholder="Enter your company ID."
 					/>
-				) : null}
+				) : (
+					<NoCompanyTax />
+				)}
 			</div>
 		</>
 	);
