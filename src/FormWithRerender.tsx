@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ControlledInput from "./components/ControlledInput";
 import Input from "./components/Input";
 import Checkbox from "./components/Checkbox";
 import { FormValues } from "./types";
@@ -6,6 +7,8 @@ import { FormValues } from "./types";
 export function FormWithRerenderWithBugFixedByControlledComponents() {
 	const [formValues, setFormValues] = useState<FormValues>({
 		isCompany: false,
+		company_tax_id_number: "",
+		personal_tax_id_number: "",
 	});
 
 	const toggleIsCompany = () => {
@@ -13,9 +16,18 @@ export function FormWithRerenderWithBugFixedByControlledComponents() {
 			return {
 				...prev,
 				isCompany: !prev.isCompany,
-				...(isCompany
-					? { company_tax_id_number: "" }
-					: { personal_tax_id_number: "" }),
+				company_tax_id_number: "",
+				personal_tax_id_number: "",
+			};
+		});
+	};
+
+	const setTaxNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		setFormValues((prev) => {
+			return {
+				...prev,
+				[name]: value,
 			};
 		});
 	};
@@ -33,17 +45,21 @@ export function FormWithRerenderWithBugFixedByControlledComponents() {
 			</div>
 			<div className="form-row">
 				{isCompany ? (
-					<Input
+					<ControlledInput
 						label="Company Tax ID Number"
 						id="company-tax-id-number"
-						placeholder="Enter your company ID."
+						placeholder="Enter your company tax ID."
+						handleChange={setTaxNumber}
+						name="company_tax_id_number"
 						value={formValues?.company_tax_id_number}
 					/>
 				) : (
-					<Input
+					<ControlledInput
 						label="Personal Tax ID Number"
 						id="personal-tax-id-number"
-						placeholder="Enter your company ID."
+						placeholder="Enter your personal tax ID."
+						handleChange={setTaxNumber}
+						name="personal_tax_id_number"
 						value={formValues?.personal_tax_id_number}
 					/>
 				)}
